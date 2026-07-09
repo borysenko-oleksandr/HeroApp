@@ -12,5 +12,10 @@ struct CharacterItem: View {
     
     var body: some View {
         Text(characterName)
+            .foregroundColor(.white)
     }
+}
+
+#Preview {
+    CharacterItem(characterName: "Richard")
 }

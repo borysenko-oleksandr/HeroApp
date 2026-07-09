@@ -11,7 +11,7 @@ struct NavigatorView: View {
     @StateObject var authManager = AuthManager()
     
     var body: some View {
-        if authManager.isLoggedIn {
+        if !authManager.isLoggedIn {
             NavigationStack {
                 CharacterListView()
             }
