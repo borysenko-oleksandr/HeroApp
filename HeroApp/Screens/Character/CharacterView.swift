@@ -8,20 +8,18 @@
 import SwiftUI
 
 struct CharacterView: View {
-    let id: Int
-    @StateObject private var viewModel: CharacterViewModel
-    
-    init(id: Int) {
-        self.id = id
-        self._viewModel = StateObject(wrappedValue: CharacterViewModel(id: id))
-    }
+    @ObservedObject private var viewModel: CharacterViewModel
 
+    init(viewModel: CharacterViewModel) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         VStack {
             
             if let character = viewModel.character {
                 Text(character.name)
-                Text(character.gender)
+                Text(character.status ?? "Unknown status")
             } else {
                 Text("Loading...")
             }
@@ -32,8 +30,4 @@ struct CharacterView: View {
             }
         }
     }
-}
-
-#Preview {
-    CharacterView(id: 1)
 }

@@ -11,18 +11,17 @@ struct Character: Decodable {
     let id: Int
     let name: String
     
+    let status: String?
+    let species: String?
+    let type: String?
+    let gender: String?
+    let location: CharacterLocation?
+    let image: String?
+    let episode: [String]?
+    let url: String?
 }
 
-struct CharacterDetails: Decodable {
-    let id: Int
+struct CharacterLocation: Decodable {
     let name: String
-    let status: String
-    let species: String
-    let type: String
-    let gender: String
-    let image: String
-    let episode: [String]
     let url: String
-    let created: String
-    
 }

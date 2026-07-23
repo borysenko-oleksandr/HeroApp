@@ -7,20 +7,32 @@
 
 import Foundation
 
+protocol NetworkServiceProtocol {
+    func request(
+        urlString: URI,
+        methods: HTTPMethod,
+        body: Data?,
+        params: String?,
+    ) async throws -> Data
+    func decodeJSONData<T: Decodable>(_ data: Data) throws -> T
+}
 
 struct ResponseErrorMessage: Codable {
     let error: String
 }
 
-public struct NetworkService {
-    // TODO: move to config
-    var baseURL: String = "https://rickandmortyapi.com/api"
+public struct NetworkService: NetworkServiceProtocol {
+    var urlSession: URLSession = .shared
+    var url = URLString()
     
     func request(
-        urlString: String,
+        urlString: URI,
         methods: HTTPMethod,
-        body: Data? = nil) async throws -> Data {
-            let fullURL = baseURL + urlString
+        body: Data? = nil,
+        params: String? = nil,
+    ) async throws -> Data {
+        let fullURL = params == nil ? url.getUrlString(for: urlString) : url.getUrlString(for: urlString, with: params!)
+        print(fullURL)
             
             guard let url = URL(string: fullURL) else {
                 throw NetworkHandlerError.InvalidURL
@@ -31,7 +43,7 @@ public struct NetworkService {
             request.httpMethod = methods.rawValue
             request.httpBody = body
             
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await urlSession.data(for: request)
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, 200..<299 ~= statusCode else {
                 let error: ResponseErrorMessage = try decodeJSONData(data)

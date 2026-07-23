@@ -11,7 +11,7 @@ import SwiftUI
 struct HeroAppApp: App {
     var body: some Scene {
         WindowGroup {
-            NavigatorView()
+            MainView()
         }
     }
 }

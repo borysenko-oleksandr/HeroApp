@@ -8,8 +8,8 @@
 import Foundation
 
 public enum HTTPMethod: String {
-    case GET = "Get"
-    case POST = "Post"
+    case GET = "GET"
+    case POST = "POST"
 }
 
 public enum NetworkHandlerError: Error, Sendable {
@@ -21,4 +21,16 @@ public enum NetworkHandlerError: Error, Sendable {
 
 public enum URI: String {
     case Character  = "/character"
+}
+
+struct URLString {
+    private let base = "https://rickandmortyapi.com/api"
+    
+    func getUrlString(for uri: URI) -> String {
+        return "\(base)\(uri.rawValue)"
+    }
+    
+    func getUrlString(for uri: URI, with params: String) -> String {
+        return "\(base)\(uri.rawValue)/\(params)"
+    }
 }

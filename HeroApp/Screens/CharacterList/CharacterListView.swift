@@ -11,6 +11,7 @@ import Combine
 struct CharacterListView: View {
     @EnvironmentObject var authManager: AuthManager
     @StateObject var viewModel = CharacterListViewModel()
+    @State private var selectedCharacterId: Int?
     
     private var characterCountText: String {
         "\(viewModel.characterList?.count ?? 0) characters"
@@ -28,15 +29,38 @@ struct CharacterListView: View {
                 
                 List {
                     ForEach(viewModel.characterList ?? [], id: \.id) { item in
-                        NavigationLink(value: item.id) {
-                            CharacterItem(characterName: item.name)
+                        Button {
+                            selectedCharacterId = item.id
+                        } label: {
+                            CharacterItem(character: item)
                         }
+                        .buttonStyle(.plain)
                         .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(
+                            EdgeInsets(
+                                top: 8,
+                                leading: 24,
+                                bottom: 8,
+                                trailing: 24
+                            )
+                        )
                     }
                 }
                 .listStyle(.plain)
-                .navigationDestination(for: Int.self) { id in
-                    CharacterView(id: id)
+                .navigationDestination(
+                    isPresented: Binding(
+                        get: { selectedCharacterId != nil },
+                        set: { isPresented in
+                            if !isPresented {
+                                selectedCharacterId = nil
+                            }
+                        }
+                    )
+                ) {
+                    if let selectedCharacterId {
+                        CharacterView(viewModel: CharacterViewModel(id: selectedCharacterId))
+                    }
                 }
             }
             .onAppear {

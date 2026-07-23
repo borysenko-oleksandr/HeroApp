@@ -13,14 +13,14 @@ import Combine
 class CharacterListViewModel: ObservableObject {
     @Published var characterList: [Character]?
     
-    let characterService = CharacterService()
+    let characterService = CharacterListUseCase()
     
     
     func fetchCharacters() async {
         do {
-            self.characterList = try await characterService.getListOfCharacters()
+            self.characterList = try await characterService.execute()
         } catch {
-            print("Error fetchCharacters")
+            print("Error fetchCharacters", error)
         }
     }
         

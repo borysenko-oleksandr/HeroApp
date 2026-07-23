@@ -12,21 +12,21 @@ import Combine
 @MainActor
 class CharacterViewModel: ObservableObject {
     let id: Int
-    @Published var character: CharacterDetails?
+    @Published var character: Character?
     
-    init(id: Int, character: CharacterDetails? = nil) {
+    init(id: Int, character: Character? = nil) {
         self.id = id
         self.character = character
     }
     
-    let characterService = CharacterService()
+    let characterService = CharacterUseCase()
     
     
     func fetchCharacters() async {
         do {
-            self.character = try await characterService.getCharacterBy(id: id)
+            self.character = try await characterService.excute(id: id)
         } catch {
-            print("Error fetchCharacters")
+            print("Error fetchCharacters", error)
         }
     }
         

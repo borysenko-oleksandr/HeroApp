@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NavigatorView: View {
+struct MainView: View {
     @StateObject var authManager = AuthManager()
     
     var body: some View {
@@ -24,5 +24,5 @@ struct NavigatorView: View {
 }
 
 #Preview {
-    NavigatorView()
+    MainView()
 }
