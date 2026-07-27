@@ -1,0 +1,33 @@
+//
+//  LoginView.swift
+//  HeroApp
+//
+//  Created by User on 01.07.2026.
+//
+
+import SwiftUI
+
+struct CharacterView: View {
+    @ObservedObject private var viewModel: CharacterViewModel
+
+    init(viewModel: CharacterViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    var body: some View {
+        VStack {
+            
+            if let character = viewModel.character {
+                Text(character.name)
+                Text(character.status ?? "Unknown status")
+            } else {
+                Text("Loading...")
+            }
+            
+        }.onAppear {
+            Task {
+                await viewModel.fetchCharacters()
+            }
+        }
+    }
+}
