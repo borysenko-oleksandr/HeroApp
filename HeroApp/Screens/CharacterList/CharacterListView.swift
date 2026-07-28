@@ -11,10 +11,9 @@ import Combine
 struct CharacterListView: View {
     @EnvironmentObject var authManager: AuthManager
     @StateObject var viewModel = CharacterListViewModel()
-    @State private var selectedCharacterId: Int?
     
     private var characterCountText: String {
-        "\(viewModel.characterList?.count ?? 0) characters"
+        "\(viewModel.characterList.count) characters"
     }
     
     var body: some View {
@@ -28,11 +27,14 @@ struct CharacterListView: View {
                     .padding(.top, 28)
                 
                 List {
-                    ForEach(viewModel.characterList ?? [], id: \.id) { item in
+                    ForEach(viewModel.characterList, id: \.id) { item in
                         Button {
-                            selectedCharacterId = item.id
+                            viewModel.selectedCharacterId = item.id
                         } label: {
                             CharacterItem(character: item)
+                                .task {
+                                    await viewModel.loadNextPageIfNeeded(currentHero: item)
+                                }
                         }
                         .buttonStyle(.plain)
                         .listRowBackground(Color.clear)
@@ -48,24 +50,13 @@ struct CharacterListView: View {
                     }
                 }
                 .listStyle(.plain)
-                .navigationDestination(
-                    isPresented: Binding(
-                        get: { selectedCharacterId != nil },
-                        set: { isPresented in
-                            if !isPresented {
-                                selectedCharacterId = nil
-                            }
-                        }
-                    )
-                ) {
-                    if let selectedCharacterId {
-                        CharacterView(viewModel: CharacterViewModel(id: selectedCharacterId))
-                    }
+                .navigationDestination(item: $viewModel.selectedCharacterId) { id in
+                    CharacterView(viewModel: CharacterViewModel(id: id))
                 }
             }
             .onAppear {
                 Task {
-                    await viewModel.fetchCharacters()
+                    await viewModel.fetchInitialCharacters()
                 }
             }
             .scrollContentBackground(.hidden)

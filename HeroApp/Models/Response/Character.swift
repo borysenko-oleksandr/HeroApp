@@ -18,3 +18,8 @@ struct CharacterListInfo: Decodable {
     let next: String?
     let prev: String?
 }
+
+struct ExecutResult {
+    let result: [Character]
+    let hasMore: Bool
+}

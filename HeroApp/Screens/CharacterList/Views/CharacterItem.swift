@@ -26,7 +26,7 @@ struct CharacterItem: View {
             return .gray
         }
     }
-    //Color(red: 0.08, green: 0.09, blue: 0.12)
+
     var body: some View {
         HStack(spacing: 20) {
             characterImage

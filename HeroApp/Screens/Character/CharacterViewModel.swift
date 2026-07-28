@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 @MainActor
-class CharacterViewModel: ObservableObject {
+final class CharacterViewModel: ObservableObject {
     let id: Int
     @Published var character: Character?
     
@@ -20,7 +20,6 @@ class CharacterViewModel: ObservableObject {
     }
     
     let characterService = CharacterUseCase()
-    
     
     func fetchCharacters() async {
         do {

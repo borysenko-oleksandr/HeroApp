@@ -14,10 +14,16 @@ struct CharacterListUseCase {
         self.networkService = networkService ?? NetworkService()
     }
     
-    func execute() async throws -> [Character] {
-        let response = try await networkService.request(urlString: URI.Character, methods: .GET)
-        print(response)
+    func execute(page: String? = nil) async throws -> ExecutResult {
+        let queryParams: [(name: String, value: String)] = [(name: "page", value: page ?? "1")]
+        
+        let response = try await networkService.request(
+            urlString: URI.Character,
+            methods: .GET,
+            queryParams: queryParams
+        )
         let list: CharacterListResponse = try networkService.decodeJSONData(response)
-        return list.results
+        return ExecutResult(result: list.results, hasMore: list.info.next != nil)
     }
+    
 }

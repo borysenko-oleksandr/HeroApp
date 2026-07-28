@@ -8,8 +8,8 @@
 import Foundation
 
 public enum HTTPMethod: String {
-    case GET = "GET"
-    case POST = "POST"
+    case GET
+    case POST
 }
 
 public enum NetworkHandlerError: Error, Sendable {

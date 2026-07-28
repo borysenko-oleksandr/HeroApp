@@ -8,13 +8,13 @@
 import SwiftUI
 import Combine
 
-class AuthManager: ObservableObject {
+final class AuthManager: ObservableObject {
     @Published var isLoggedIn: Bool = false
-    
+
     func login() {
         isLoggedIn = true
     }
-    
+
     func logout() {
         isLoggedIn = false
     }

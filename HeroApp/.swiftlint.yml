@@ -1,0 +1,42 @@
+disabled_rules:
+  - trailing_whitespace
+  - todo
+  - identifier_name
+
+opt_in_rules:
+  - empty_count
+  - empty_string
+  - force_unwrapping
+  - closure_spacing
+  - contains_over_filter_count
+
+excluded:
+  - Pods
+  - DerivedData
+  - .build
+  - Packages
+  - Generated
+  - Tests/Generated
+
+line_length:
+  warning: 120
+  error: 160
+  ignores_comments: true
+  ignores_urls: true
+
+file_length:
+  warning: 500
+  error: 800
+
+function_body_length:
+  warning: 60
+  error: 100
+
+type_body_length:
+  warning: 300
+  error: 500
+
+force_unwrapping:
+  severity: warning
+
+reporter: xcode
