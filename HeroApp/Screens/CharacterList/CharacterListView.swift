@@ -13,7 +13,10 @@ struct CharacterListView: View {
     @StateObject var viewModel = CharacterListViewModel()
     
     private var characterCountText: String {
-        "\(viewModel.characterList.count) characters"
+        String(
+            format: String(localized: "characters.count"),
+            viewModel.characterList.count
+        )
     }
     
     var body: some View {
@@ -22,7 +25,7 @@ struct CharacterListView: View {
                 .ignoresSafeArea()
             
             VStack(alignment: .leading, spacing: 24) {
-                Header(title: "Characters", secondoryText: characterCountText)
+                Header(title: String(localized: "common.characters"), secondoryText: characterCountText)
                     .padding(.horizontal, 24)
                     .padding(.top, 28)
                 

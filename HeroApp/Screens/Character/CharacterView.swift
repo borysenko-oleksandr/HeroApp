@@ -19,9 +19,9 @@ struct CharacterView: View {
             
             if let character = viewModel.character {
                 Text(character.name)
-                Text(character.status ?? "Unknown status")
+                Text(character.status ?? String(localized: "character.unknownStatus"))
             } else {
-                Text("Loading...")
+                Text(String(localized: "common.loading"))
             }
             
         }.onAppear {

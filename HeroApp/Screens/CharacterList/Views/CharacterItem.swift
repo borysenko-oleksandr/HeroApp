@@ -42,7 +42,7 @@ struct CharacterItem: View {
                     .foregroundColor(.white.opacity(0.58))
                     .lineLimit(1)
                 
-                Text(character.location?.name ?? "Unknown location")
+                Text(character.location?.name ?? String(localized: "character.unknownLocation"))
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.white.opacity(0.42))
                     .lineLimit(1)

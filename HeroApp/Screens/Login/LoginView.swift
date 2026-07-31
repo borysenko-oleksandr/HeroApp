@@ -11,7 +11,7 @@ struct LoginView: View {
     @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
-        Button("Login") {
+        Button(String(localized: "common.login")) {
             authManager.login()
         }
     }

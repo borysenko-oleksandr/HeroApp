@@ -19,7 +19,7 @@ struct Header: View {
                     .frame(width: 14, height: 14)
                     .shadow(color: Color("AccentGreen").opacity(0.7), radius: 10)
                 
-                Text("CHARACTER INDEX")
+                Text(String(localized: "character.index"))
                     .font(.system(size: 14, weight: .bold))
                     .tracking(6)
                     .foregroundStyle(Color("SecondaryText"))
